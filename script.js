@@ -1,42 +1,19 @@
-let hearts = []
-let spades = []
-let clubs = []
-let diamonds = []
 let deckOfCards = []
-while (hearts.length <14) {
-    hearts.push("Hjärter ")
+function createDeck() {
+  let suits = ['Spader ', 'Hjärter ', 'Klöver ', 'Ruter ']
+  for (let i = 0; i < suits.length; i++) {
+    for(let j = 1; j < 14; j++) {
+      let card = {
+        suite: suits[i],
+        value: j
+      }
+      deckOfCards.push(card)
+    }
   }
-while (spades.length <14) {
-    spades.push("Spader ")
-  }
-while (clubs.length <14) {
-    clubs.push("Klöver ")
-  }
-while (diamonds.length <14) {
-    diamonds.push("Ruter ")
-  }
-
-hearts.forEach((heart, index) => {
-    if (index >= 1) {
-      deckOfCards.push(heart + index)
-  }
-})
-spades.forEach((spade, index) => {
-  if (index >= 1) {
-    deckOfCards.push(spade + index)
+  return deckOfCards
 }
-})
-clubs.forEach((club, index) => {
-  if (index >= 1) {
-    deckOfCards.push(club + index)}
-})
-diamonds.forEach((diamond, index) => {
-  if (index >= 1) {
-    deckOfCards.push(diamond + index)}
-})
-deckOfCards.forEach(card => {
-  //console.log(card)
-})
+
+createDeck()
 
 let cardHolder = document.querySelector(".placeholder")
 let newParagraph = document.createElement("p")
@@ -47,12 +24,13 @@ let newParagraph = document.createElement("p")
 let oldCard
 let random1
 function generateNewCard () {
-  random1 = deckOfCards[(Math.floor(Math.random() * (deckOfCards.length)))]
-  console.log(random1)
-  newParagraph.innerText = random1
+  newCard = deckOfCards[(Math.floor(Math.random() * (deckOfCards.length)))]
+  console.log(newCard)
+  newParagraph.innerText = newCard.suite + newCard.value
   cardHolder.appendChild(newParagraph)
-  oldCard = random1
-  return oldCard
+  oldCard = newCard
+  console.log(oldCard.value)
+  console.log(newCard.value)
 } 
 generateNewCard()
 let lowerBtn = document.getElementById("lower")
@@ -62,11 +40,9 @@ let points = document.querySelector(".score")
 points.innerText = 0
 
 
-// let splitNumber = deckOfCards.split(" ")
-// console.log(splitNumber[0])
-let i
+
 lowerBtn.addEventListener("click", () => {
-  if (oldCard[i] > random1[i]) {
+  if (oldCard.value > newCard.value) {
     points.innerText += 1
     generateNewCard()
  }
